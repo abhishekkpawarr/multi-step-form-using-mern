@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Form, Button } from "react-bootstrap";
-import csc from "country-state-city";
-import axios from "axios";
-import { motion } from "framer-motion";
-import Swal from "sweetalert2";
-import { BASE_API_URL } from "../utils/constants";
+import React, { useState, useEffect } from 'react';
+import { Form, Button } from 'react-bootstrap';
+import csc from 'country-state-city';
+import axios from 'axios';
+import { motion } from 'framer-motion';
+import Swal from 'sweetalert2';
+import { BASE_API_URL } from '../utils/constants';
 
 const ThirdStep = (props) => {
   const [countries, setCountries] = useState([]);
@@ -12,9 +12,9 @@ const ThirdStep = (props) => {
   const [cities, setCities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [selectedCountry, setSelectedCountry] = useState("");
-  const [selectedState, setSelectedState] = useState("");
-  const [selectedCity, setSelectedCity] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState('');
+  const [selectedState, setSelectedState] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
 
   useEffect(() => {
     const getCountries = async () => {
@@ -24,7 +24,7 @@ const ThirdStep = (props) => {
         let allCountries = [];
         allCountries = result?.map(({ isoCode, name }) => ({
           isoCode,
-          name,
+          name
         }));
         const [{ isoCode: firstCountry } = {}] = allCountries;
         setCountries(allCountries);
@@ -46,17 +46,17 @@ const ThirdStep = (props) => {
         let allStates = [];
         allStates = result?.map(({ isoCode, name }) => ({
           isoCode,
-          name,
+          name
         }));
-        const [{ isoCode: firstState = "" } = {}] = allStates;
+        const [{ isoCode: firstState = '' } = {}] = allStates;
         setCities([]);
-        setSelectedCity("");
+        setSelectedCity('');
         setStates(allStates);
         setSelectedState(firstState);
       } catch (error) {
         setStates([]);
         setCities([]);
-        setSelectedCity("");
+        setSelectedCity('');
       }
     };
 
@@ -72,9 +72,9 @@ const ThirdStep = (props) => {
         );
         let allCities = [];
         allCities = result?.map(({ name }) => ({
-          name,
+          name
         }));
-        const [{ name: firstCity = "" } = {}] = allCities;
+        const [{ name: firstCity = '' } = {}] = allCities;
         setCities(allCities);
         setSelectedCity(firstCity);
       } catch (error) {
@@ -95,30 +95,30 @@ const ThirdStep = (props) => {
           (country) => country.isoCode === selectedCountry
         )?.name,
         state:
-          states.find((state) => state.isoCode === selectedState)?.name || "", // or condition added because selectedState might come as undefined
-        city: selectedCity,
+          states.find((state) => state.isoCode === selectedState)?.name || '', // or condition added because selectedState might come as undefined
+        city: selectedCity
       };
 
       await axios.post(`${BASE_API_URL}/register`, {
         ...user,
-        ...updatedData,
+        ...updatedData
       });
-      Swal.fire("Awesome!", "You're successfully registered!", "success").then(
+      Swal.fire('Awesome!', "You're successfully registered!", 'success').then(
         (result) => {
           if (result.isConfirmed || result.isDismissed) {
             props.resetUser();
-            props.history.push("/");
+            props.history.push('/');
           }
         }
       );
     } catch (error) {
       if (error.response) {
         Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: error.response.data,
+          icon: 'error',
+          title: 'Oops...',
+          text: error.response.data
         });
-        console.log("error", error.response.data);
+        console.log('error', error.response.data);
       }
     }
   };
@@ -127,7 +127,7 @@ const ThirdStep = (props) => {
     <Form className="input-form" onSubmit={handleSubmit}>
       <motion.div
         className="col-md-6 offset-md-3"
-        initial={{ x: "-100vw" }}
+        initial={{ x: '-100vw' }}
         animate={{ x: 0 }}
         transition={{ stiffness: 150 }}
       >

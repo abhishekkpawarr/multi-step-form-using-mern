@@ -1,27 +1,27 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { Form, Button } from "react-bootstrap";
-import axios from "axios";
-import { BASE_API_URL } from "../utils/constants";
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Form, Button } from 'react-bootstrap';
+import axios from 'axios';
+import { BASE_API_URL } from '../utils/constants';
 
 const Login = () => {
   const { register, handleSubmit, errors } = useForm();
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [userDetails, setUserDetails] = useState("");
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [userDetails, setUserDetails] = useState('');
 
   const onSubmit = async (data) => {
     console.log(data);
 
     try {
       const response = await axios.post(`${BASE_API_URL}/login`, data);
-      setSuccessMessage("User with the provided credentials found.");
-      setErrorMessage("");
+      setSuccessMessage('User with the provided credentials found.');
+      setErrorMessage('');
       setUserDetails(response.data);
     } catch (error) {
       console.log(error);
       if (error.response) {
-        console.log("error", error.response.data);
+        console.log('error', error.response.data);
         setErrorMessage(error.response.data);
       }
     }
@@ -56,13 +56,13 @@ const Login = () => {
             name="user_email"
             placeholder="Enter your email address"
             ref={register({
-              required: "Email is required.",
+              required: 'Email is required.',
               pattern: {
                 value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
-                message: "Email is not valid.",
-              },
+                message: 'Email is not valid.'
+              }
             })}
-            className={`${errors.user_email ? "input-error" : ""}`}
+            className={`${errors.user_email ? 'input-error' : ''}`}
           />
           {errors.user_email && (
             <p className="errorMsg">{errors.user_email.message}</p>
@@ -76,13 +76,13 @@ const Login = () => {
             name="user_password"
             placeholder="Choose a password"
             ref={register({
-              required: "Password is required.",
+              required: 'Password is required.',
               minLength: {
                 value: 6,
-                message: "Password should have at-least 6 characters.",
-              },
+                message: 'Password should have at-least 6 characters.'
+              }
             })}
-            className={`${errors.user_password ? "input-error" : ""}`}
+            className={`${errors.user_password ? 'input-error' : ''}`}
           />
           {errors.user_password && (
             <p className="errorMsg">{errors.user_password.message}</p>

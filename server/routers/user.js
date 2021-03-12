@@ -1,14 +1,14 @@
-const express = require("express");
-const User = require("../models/user");
-const bcrypt = require("bcryptjs");
+const express = require('express');
+const User = require('../models/user');
+const bcrypt = require('bcryptjs');
 const router = express.Router();
 
-router.post("/register", async (req, res) => {
+router.post('/register', async (req, res) => {
   const { user_email, user_password } = req.body;
 
   let user = await User.findOne({ user_email });
   if (user) {
-    return res.status(400).send("User with the provided email already exist.");
+    return res.status(400).send('User with the provided email already exist.');
   }
 
   try {
@@ -18,15 +18,15 @@ router.post("/register", async (req, res) => {
     await user.save();
     res.status(201).send();
   } catch (e) {
-    res.status(500).send("Something went wrong. Try again later.");
+    res.status(500).send('Something went wrong. Try again later.');
   }
 });
 
-router.post("/login", async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     const user = await User.findOne({ user_email: req.body.user_email });
     if (!user) {
-      return res.status(400).send("User with provided email does not exist.");
+      return res.status(400).send('User with provided email does not exist.');
     }
 
     const isMatch = await bcrypt.compare(
@@ -35,13 +35,13 @@ router.post("/login", async (req, res) => {
     );
 
     if (!isMatch) {
-      return res.status(400).send("Invalid credentials.");
+      return res.status(400).send('Invalid credentials.');
     }
     const { user_password, ...rest } = user.toObject();
 
     return res.send(rest);
   } catch (error) {
-    return res.status(500).send("Something went wrong. Try again later.");
+    return res.status(500).send('Something went wrong. Try again later.');
   }
 });
 
