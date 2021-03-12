@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start-client": "react-scripts start",
-    "start": "cd server && npm start",
+    "start": "start http://localhost:3030 && cd server && npm start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
